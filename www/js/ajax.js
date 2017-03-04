@@ -3,23 +3,34 @@ $(function(){
 	var utangersListTemplate = $("#utangersListTemplate").html();
 	var select = $("#select");
 	var listTemplate = $("#listTemplate").html();
-	$.ajax({
-		url: "../php/get_has_utang.php",
-		success: function(data) {
-			console.log(data);
-			utangersList.append(Mustache.render(utangersListTemplate, data));
-		},
-		dataType: "json"
-	});
-
-	$.ajax({
-		url: "../php/get_utangers.php",
-		success: function(data) {
-			console.log(data);
-			select.append(Mustache.render(listTemplate, data));
-		},
-		dataType: "json"
-	});
+	var panel = $("#panel");
+	var panelTemplate = $("#panelTemplate").html();
+	if(utangersListTemplate != undefined) {
+		$.ajax({
+			url: "../php/get_has_utang.php",
+			success: function(data) {
+				utangersList.append(Mustache.render(utangersListTemplate, data));
+			},
+			dataType: "json"
+		});
+	}else if(listTemplate != undefined){
+		$.ajax({
+			url: "../php/get_utangers.php",
+			success: function(data) {
+				select.append(Mustache.render(listTemplate, data));
+			},
+			dataType: "json"
+		});
+	}else if(panelTemplate != undefined) {
+		$.ajax({
+			type: "post",
+			url: "../php/get_utang_list.php",
+			dataType: "json",
+			success: function(data) {
+				panel.append(Mustache.render(panelTemplate, data));
+			}
+		});
+	}
 
 	$("#btnSaveUtanger").on('click', function() {
 		var firstName = $("#firstName").val();
@@ -74,7 +85,7 @@ $(function(){
 			url: "../php/get_utang.php",
 			data: {"id": id},
 			success: function(data) {
-				console.log(data);
+				window.location.assign("../utang/");
 			}
 		});
 	});
