@@ -105,13 +105,14 @@ $(function(){
 		var id = button.attr("data-id");
 		var utangerId = button.attr("data-utanger");
 		console.log(utangerId);
-		getUtang(utangerId);
+		
 		$.ajax({
 			type: "post",
 			url: "../php/pay_utang.php",
 			data: {"id":id},
 			success: function(data) {
 				console.log(data);
+				getUtang(utangerId);
 				setTimeout(function() {getUtangList()}, 5000);
 			}
 		});
