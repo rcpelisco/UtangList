@@ -6,14 +6,16 @@
     <title></title>
     <link rel="manifest" href="../manifest.json">
     <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap2-toggle.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
     <script src="../lib/ionic/js/ionic.bundle.js"></script>
     <script src="../cordova.js"></script>
     <script src="../js/jquery.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap2-toggle.min.js"></script>
     <script src="../js/ajax.js"></script>
     <script src="../js/mustache.js"></script>
     <script src="../js/app.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
   </head>
   <body>
     <nav class="navbar navbar-default navbar-static-top">
@@ -37,8 +39,20 @@
 				<div class="list-group">
 					{{ #utang }}
 					<div class="list-group-item">
-						<p>Date: <strong>{{ date }}</strong></p>
-						<p>Amount: <strong>P {{ amount }}</strong></p>
+            <div class="row">
+              <div class="col-xs-12">
+                <p>Date: <strong>{{ date }}</strong></p>
+              </div>
+              <div class="col-xs-9">
+                <p>Amount: <strong>P {{ amount }}</strong></p>
+              </div>
+              <div class="col-xs-3">
+                <button data-id="{{id}}" data-utanger="{{utanger_id}}"class="btn btn-default btn-pay">Pay!</button>
+              </div>
+              <div class="col-xs-12">
+                <p>Status: <strong>{{ paid }}</strong></p>
+              </div>
+            </div>
 					</div>
 					{{ /utang }}
 				</div>

@@ -1,6 +1,6 @@
 <?php
 require("DBConnection.php");
-$sql = "SELECT 
+$sql = "SELECT
 			DISTINCT
 			utangers.utanger_id, 
 			utangers.first_name, 

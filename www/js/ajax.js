@@ -5,6 +5,30 @@ $(function(){
 	var listTemplate = $("#listTemplate").html();
 	var panel = $("#panel");
 	var panelTemplate = $("#panelTemplate").html();
+	function getUtangList() {
+		$.ajax({
+			type: "post",
+			url: "../php/get_utang_list.php",
+			dataType: "json",
+			success: function(data) {
+				panel.contents().remove();
+				panel.append(Mustache.render(panelTemplate, data));
+			}
+		});
+	}
+	
+	function getUtang(id) {
+		$.ajax({
+			type: "get",
+			url: "../php/get_utang.php",
+			data: {"id": id},
+			success: function(data) {
+				console.log(data);
+				window.location.assign("../utang/");
+			}
+		});
+	}
+
 	if(utangersListTemplate != undefined) {
 		$.ajax({
 			url: "../php/get_has_utang.php",
@@ -22,14 +46,7 @@ $(function(){
 			dataType: "json"
 		});
 	}else if(panelTemplate != undefined) {
-		$.ajax({
-			type: "post",
-			url: "../php/get_utang_list.php",
-			dataType: "json",
-			success: function(data) {
-				panel.append(Mustache.render(panelTemplate, data));
-			}
-		});
+		getUtangList();	
 	}
 
 	$("#btnSaveUtanger").on('click', function() {
@@ -80,12 +97,22 @@ $(function(){
 
 	$("#utangersList").on("click", ".get-utang", function() {
 		var id = $(this).attr("id");
+		getUtang(id);
+	});
+
+	$("#panel").on("click", ".btn-pay", function() {
+		var button = $(this);
+		var id = button.attr("data-id");
+		var utangerId = button.attr("data-utanger");
+		console.log(utangerId);
+		getUtang(utangerId);
 		$.ajax({
-			type: "get",
-			url: "../php/get_utang.php",
-			data: {"id": id},
+			type: "post",
+			url: "../php/pay_utang.php",
+			data: {"id":id},
 			success: function(data) {
-				window.location.assign("../utang/");
+				console.log(data);
+				setTimeout(function() {getUtangList()}, 5000);
 			}
 		});
 	});

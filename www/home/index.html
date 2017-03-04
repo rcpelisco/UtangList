@@ -35,7 +35,10 @@
     <div class="list-group" id="utangersList">
       <template id="utangersListTemplate">
         {{ #utanger}}
-        <button type="button" class="list-group-item get-utang" id="{{id}}"><strong>{{ name }}</strong></button>
+        <button type="button" class="list-group-item get-utang" id="{{id}}">
+          <strong>{{ name }}</strong>
+            <span class="badge">{{ num }}</span>
+          </button>
         {{ /utanger}}
       </template>
     </div>
