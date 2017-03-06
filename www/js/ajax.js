@@ -117,4 +117,26 @@ $(function(){
 			}
 		});
 	});
+
+	$("#panel").on("click", ".btn-del", function() {
+		var button = $(this);
+		var id = button.attr("data-id");
+		var utangerId = button.attr("data-utanger");
+		console.log(utangerId);
+		
+		$.ajax({
+			type: "post",
+			url: "../php/delete_utang.php",
+			data: {"id":id},
+			success: function(data) {
+				console.log(data);
+				getUtang(utangerId);
+				setTimeout(function() {getUtangList()}, 5000);
+			},
+			error: function(e,r) {
+				console.log(e);
+				console.log(r);
+			}
+		});
+	});
 });

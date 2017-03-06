@@ -22,8 +22,9 @@
       <div class="container">
         <div class="container-fluid">
           <div class="navbar-header">
-            <a class="navbar-brand" href="#">
-              Utang
+            <a class="navbar-brand" href="../home/">
+              <span class="glyphicon glyphicon-menu-left"></span>
+               Utang
             </a>
           </div>
         </div>
@@ -47,7 +48,8 @@
                 <p>Amount: <strong>P {{ amount }}</strong></p>
               </div>
               <div class="col-xs-3">
-                <button data-id="{{id}}" data-utanger="{{utanger_id}}"class="btn btn-default btn-pay {{hidden}}">Pay!</button>
+                <button data-id="{{id}}" data-utanger="{{utanger_id}}"class="btn btn-default btn-pay {{hidden_pay}}">Pay!</button>
+                <button data-id="{{id}}" data-utanger="{{utanger_id}}"class="btn btn-danger btn-del {{hidden_del}}">Delete</button>
               </div>
               <div class="col-xs-12">
                 <p>Status: <strong>{{ paid }}</strong></p>

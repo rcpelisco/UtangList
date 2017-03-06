@@ -22,17 +22,20 @@ $result = $mysql->query($sql);
 $utangs = new stdClass();
 while($row = $result->fetch_assoc()) {
 	$status = "Paid";
-	$hidden = "hidden";
+	$hidden_pay = "hidden";
+	$hidden_del = "";
 	if($row['paid'] == 0) {
 		$status = "Not Paid";
-		$hidden = "";
+		$hidden_pay = "";
+		$hidden_del = "hidden";
 	}
 	$utang[] = [
 		"id" => $row['utang_id'],
 		"date" => $row['created_on'],
 		"amount" => $row['amount'],
 		"paid" => $status,
-		"hidden" => $hidden
+		"hidden_pay" => $hidden_pay,
+		"hidden_del" => $hidden_del
 	];
 	$utangs->utanger_id = $row['utanger_id'];
 	$utangs->name = $row['first_name'] . " " . $row['last_name'];
