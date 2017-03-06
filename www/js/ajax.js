@@ -5,6 +5,20 @@ $(function(){
 	var listTemplate = $("#listTemplate").html();
 	var panel = $("#panel");
 	var panelTemplate = $("#panelTemplate").html();
+	function change(button, path) {
+		var id = button.attr("data-id");
+		var utangerId = button.attr("data-utanger")
+		
+		$.ajax({
+			type: "post",
+			url: path,
+			data: {"id":id},
+			success: function(data) {
+				getUtang(utangerId, false);
+				setTimeout(function() {getUtangList()}, 250);
+			}
+		});
+	}
 	function getUtangList() {
 		$.ajax({
 			type: "post",
@@ -17,14 +31,19 @@ $(function(){
 		});
 	}
 	
-	function getUtang(id) {
+	function getUtang(id, reload) {
 		$.ajax({
 			type: "get",
 			url: "../php/get_utang.php",
 			data: {"id": id},
 			success: function(data) {
 				console.log(data);
-				window.location.assign("../utang/");
+				if(data == false) {
+					window.location.replace("../home/");
+				}
+				if(reload) {
+					window.location.assign("../utang/");
+				}
 			}
 		});
 	}
@@ -88,7 +107,6 @@ $(function(){
 					"amount": amount
 				},
 				success: function(data) {
-					console.log(data);
 					window.location.replace("../home/");
 				}
 			});
@@ -97,46 +115,14 @@ $(function(){
 
 	$("#utangersList").on("click", ".get-utang", function() {
 		var id = $(this).attr("id");
-		getUtang(id);
+		getUtang(id, true);
 	});
 
 	$("#panel").on("click", ".btn-pay", function() {
-		var button = $(this);
-		var id = button.attr("data-id");
-		var utangerId = button.attr("data-utanger");
-		console.log(utangerId);
-		
-		$.ajax({
-			type: "post",
-			url: "../php/pay_utang.php",
-			data: {"id":id},
-			success: function(data) {
-				console.log(data);
-				getUtang(utangerId);
-				setTimeout(function() {getUtangList()}, 5000);
-			}
-		});
+		change($(this), "../php/pay_utang.php");
 	});
 
 	$("#panel").on("click", ".btn-del", function() {
-		var button = $(this);
-		var id = button.attr("data-id");
-		var utangerId = button.attr("data-utanger");
-		console.log(utangerId);
-		
-		$.ajax({
-			type: "post",
-			url: "../php/delete_utang.php",
-			data: {"id":id},
-			success: function(data) {
-				console.log(data);
-				getUtang(utangerId);
-				setTimeout(function() {getUtangList()}, 5000);
-			},
-			error: function(e,r) {
-				console.log(e);
-				console.log(r);
-			}
-		});
+		change($(this), "../php/delete_utang.php");
 	});
 });

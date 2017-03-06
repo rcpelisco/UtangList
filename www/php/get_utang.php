@@ -2,7 +2,6 @@
 require("DBConnection.php");
 session_start();
 $id = $_GET['id'];
-echo $id;
 $sql = "SELECT
 			utangers.utanger_id as utanger_id,
 			first_name,
@@ -17,9 +16,10 @@ $sql = "SELECT
 		WHERE
 			utangers.utanger_id = $id AND
 			utang.utanger_id = $id
-		ORDER BY paid ASC, created_on DESC;";
+		ORDER BY paid ASC, created_on DESC";
 $result = $mysql->query($sql);
 $utangs = new stdClass();
+$utang = null;
 while($row = $result->fetch_assoc()) {
 	$status = "Paid";
 	$hidden_pay = "hidden";
@@ -40,6 +40,11 @@ while($row = $result->fetch_assoc()) {
 	$utangs->utanger_id = $row['utanger_id'];
 	$utangs->name = $row['first_name'] . " " . $row['last_name'];
 	$utangs->contact = $row['contact_no'];
+}
+if($utang == null) {
+	echo false;
+	$_SESSION['utangs'] = false;
+	return;
 }
 $utangs->utang = $utang;
 echo "<pre>";

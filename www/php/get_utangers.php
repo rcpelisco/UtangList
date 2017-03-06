@@ -1,6 +1,6 @@
 <?php
 require("DBConnection.php");
-$sql = "SELECT * FROM utangers";
+$sql = "SELECT * FROM utangers ORDER BY utanger_id DESC";
 $result = $mysql->query($sql);
 $utangers = new stdClass();
 while($row = $result->fetch_assoc()) {
