@@ -23,10 +23,10 @@ $(function(){
 		$.ajax({
 			type: "post",
 			url: "../php/get_utang_list.php",
-			dataType: "json",
 			success: function(data) {
+				console.log(data);
 				panel.contents().remove();
-				panel.append(Mustache.render(panelTemplate, data));
+				panel.append(Mustache.render(panelTemplate, JSON.parse(data)));
 			}
 		});
 	}
@@ -52,9 +52,9 @@ $(function(){
 		$.ajax({
 			url: "../php/get_has_utang.php",
 			success: function(data) {
-				utangersList.append(Mustache.render(utangersListTemplate, data));
-			},
-			dataType: "json"
+				console.log(data);
+				utangersList.append(Mustache.render(utangersListTemplate, JSON.parse(data)));
+			}
 		});
 	}else if(listTemplate != undefined){
 		$.ajax({

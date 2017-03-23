@@ -7,6 +7,7 @@ $sql = "SELECT
 			first_name,
 			last_name,
 			contact_no,
+			address,
 			DATE_FORMAT(created_on , '%M %d, %Y - %r' ) as created_on,
 			amount,
 			utang_id,
@@ -40,6 +41,7 @@ while($row = $result->fetch_assoc()) {
 	$utangs->utanger_id = $row['utanger_id'];
 	$utangs->name = $row['first_name'] . " " . $row['last_name'];
 	$utangs->contact = $row['contact_no'];
+	$utangs->address = $row['address'];
 }
 if($utang == null) {
 	echo false;
@@ -47,8 +49,6 @@ if($utang == null) {
 	return;
 }
 $utangs->utang = $utang;
-echo "<pre>";
 echo json_encode($utangs, JSON_PRETTY_PRINT);
-echo "</pre>";
 $_SESSION['utangs'] = $utangs;
 ?>
